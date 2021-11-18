@@ -1,9 +1,10 @@
-import { Router} from 'express'
+import { Router } from 'express'
 const router = Router()
 import * as postsCtrl from '../controllers/posts.controller'
-router.get('/', postsCtrl.readAllPosts);
-router.get('/:id', postsCtrl.readPost);
-router.post('/', postsCtrl.createPost);
-router.delete('/:id', postsCtrl.delPost);
-router.put('/:id', postsCtrl.updatePost);
+const { checkToken } = require('../auth/token_validation')
+router.get('/', checkToken, postsCtrl.readAllPosts);
+router.get('/:id', checkToken, postsCtrl.readPost);
+router.post('/', checkToken, postsCtrl.createPost);
+router.delete('/:id', checkToken, postsCtrl.delPost);
+router.put('/:id', checkToken, postsCtrl.updatePost);
 export default router;
